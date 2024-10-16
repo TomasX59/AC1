@@ -27,9 +27,9 @@ for:	bge 	$t2, 5, endfor	# while(i < 5){
 	
 	li 	$v0, 5
 	syscall			# 	read_int;
-	sw	$v0,$t1		# 	Value = read_int();
+	ori	$t1,$v0,0	# 	Value = read_int();
 	
-	ble	$t1,$0,else	# 	if(value > 0)
+	ble	$t1,$0,endif	# 	if(value > 0)
 	add	$t0, $t0, $t1	# 		soma += value;
 	j	else
 	
