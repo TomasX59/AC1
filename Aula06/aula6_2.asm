@@ -2,8 +2,6 @@
 # p		:	$t1
 # pultimo	:	$t2
 
-
-
 	.eqv	SIZE,3
 	.eqv	print_string,4
 	.eqv	print_char,11
@@ -26,11 +24,15 @@ main:
 
 for:	bge 	$t1,$t2,endfor
 
-	ori	$v0,0,print_string
-	lw	$a0,0($t1)
+	ori	$v0,$0,print_string	#
+	lw	$a0,0($t1)		#
+	syscall
+	
+	ori 	$v0,$0,print_char
+	li	$a0,'\n'
+	syscall
 
-
-
-	addi	$t1,$t1,1
+	addi	$t1,$t1,4
+	j 	for
 endfor:
 	jr	$ra
