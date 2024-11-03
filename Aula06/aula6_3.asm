@@ -32,17 +32,27 @@ for: 	bge	$t0,SIZE,endfor
 	syscall	
 	
 	li	$v0,print_int10
-	move 	$a0, $t0
+	move 	$a0,$t0
 	syscall
 	
 	li	$v0,4
 	la	$a0,str5
 	syscall
 	
-while:	beq	$t2,'\0',endwhile
+	li	$t1,0
+	
+while:	la	$t3,array		# $t3 = &array[0]
+	sll	$t2,$t0,2		# escolher a string -> i*4
+	addu	$t3,$t3,$t2		# $t3 = &array[0] + i*4 -> &array[i]
+	lw 	$t3,0($t3)		# $t3 = array[i] = &array[i][0]
+	addu 	$t3,$t3,$t1		# $t3 = &array[i][j]
+	lb 	$t3,0($t3)		# $t3 = array[i][j]
+	
+
+	beq	$t3,'\0',endwhile
 	
 	li	$v0,print_char
-	move	$a0,$t2
+	move	$a0,$t3
 	syscall
 	
 	li	$v0,print_char
@@ -52,9 +62,8 @@ while:	beq	$t2,'\0',endwhile
 
 	addi 	$t1,$t1,1
 	j	while
+	
 endwhile:
-
-
 
 	addi 	$t0,$t0,1
 	j	for
