@@ -19,7 +19,7 @@ for:	bge 	$t0,10,endfor
 	j 	for
 endfor:	
 	la 	$a0,array
-	la 	$a1,10
+	li 	$a1,10
 	jal 	average
 	
 	mov.d 	$f12,$f0
@@ -37,6 +37,7 @@ average:
 # double average(double *array, int n)
 # *array : $a0
 # n      : $a1
+	
 	l.d	$f2,sum			# double sum = 0.0;	
 	li	$t0,0
 for2:	bge	$t0,$a1,endfor2
@@ -46,7 +47,7 @@ for2:	bge	$t0,$a1,endfor2
 	addi 	$t0,$t0,1
 	j	for2
 endfor2:
-	mtc1.d	$a1,$f8			# int to double
+	mtc1	$a1,$f8			# int to double
 	cvt.d.w	$f8,$f8
 	div.d	$f0,$f2,$f8		# return sum / (double)n;
 	jr	$ra
