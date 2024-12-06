@@ -3,6 +3,7 @@
 # 	p1: 	$s1 		(registo callee-saved)
 # 	p2: 	$s2 		(registo callee-saved)
 #
+
 strrev:	addiu 	$sp,$sp,-16 	# reserva espaço na stack
  	sw 	$ra,0($sp) 	# guarda endereço de retorno
  	sw 	$s0,4($sp) 	# guarda valor dos registos
@@ -35,5 +36,9 @@ while2: bge	$s1,$s2,endw2	# while(p1 < p2) {
  	jr 	$ra 		# termina a sub-rotina 
  	
 echange:
-
+	lb	$t1,0($a0)		# $t1 = *c1
+	lb	$t2,0($a1)		# $t2 = *c2
+	move	$t3,$t1			# char aux = *c1;
+	sw	$t2,0($a0)		# *c1 = *c2;
+	sw	$t3,0($a1)		# *c2 = aux;
 	jr	$ra
